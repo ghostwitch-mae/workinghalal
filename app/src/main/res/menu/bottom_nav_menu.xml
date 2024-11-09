@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_maps"
+        android:icon="@drawable/ic_home"
+        android:title="Explore" />
+
+    <item
+        android:id="@+id/navigation_second"
+        android:icon="@drawable/ic_saved"
+        android:title="Saved" />
+
+    <item
+        android:id="@+id/navigation_third"
+        android:icon="@drawable/ic_star"
+        android:title="Leaderboards" />
+
+    <item
+        android:id="@+id/navigation_fourth"
+        android:icon="@drawable/ic_settings"
+        android:title="Settings" />
+</menu>

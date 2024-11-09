@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_maps">
+
+    <fragment
+        android:id="@+id/navigation_maps"
+        android:name="com.example.myapplication.MapsFragment"
+        android:label="Map" />
+
+    <fragment
+        android:id="@+id/navigation_second"
+        android:name="com.example.myapplication.SecondFragment"
+        android:label="Second" />
+
+    <fragment
+        android:id="@+id/navigation_third"
+        android:name="com.example.myapplication.ThirdFragment"
+        android:label="Third" />
+
+    <fragment
+        android:id="@+id/navigation_fourth"
+        android:name="com.example.myapplication.FourthFragment"
+        android:label="Fourth" />
+
+</navigation>
