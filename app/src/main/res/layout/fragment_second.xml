@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:background="#FFF5F5"
         android:fillViewport="true">
-    <RelativeLayout
+    <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -38,8 +38,8 @@
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="false">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/ic_settings"></ImageView>
             <TextView
                 android:layout_width="match_parent"
@@ -105,7 +105,7 @@
                 android:textStyle="bold"
                 />
         </androidx.cardview.widget.CardView>
-    </RelativeLayout>
+    </LinearLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
