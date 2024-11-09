@@ -2,7 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
+
 
 android {
     signingConfigs {
@@ -16,6 +18,7 @@ android {
     namespace = "com.example.myapplication"
     compileSdk = 35
 
+
     defaultConfig {
         applicationId = "com.example.myapplication"
         minSdk = 26
@@ -24,7 +27,7 @@ android {
         versionName = "1.0"
         manifestPlaceholders["MAPS_API_KEY"] = System.getenv("MAPS_API_KEY") ?: project.properties["MAPS_API_KEY"]?.toString() ?: ""
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
+        buildConfigField("String", "PLACES_API_KEY", "\"AIzaSyBnDwch8Nndq-X-vA1lmFwZXokpR2lJRxw\"")
     }
 
     buildTypes {
@@ -56,6 +59,8 @@ android {
     }
 }
 
+
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -79,5 +84,8 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
     implementation("com.google.android.material:material:1.10.0")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.libraries.places:places:3.5.0")
+
+
 
 }
