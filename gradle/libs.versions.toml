@@ -12,6 +12,7 @@ constraintlayout = "2.2.0"
 navigationFragment = "2.8.3"
 material = "1.12.0"
 gms-maps = "18.2.0"
+firebaseDatabaseKtx = "21.0.0"
 
 [libraries]
 google-android-gms-play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "gms-maps" }
@@ -32,6 +33,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

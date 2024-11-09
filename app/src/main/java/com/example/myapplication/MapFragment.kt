@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -18,8 +19,16 @@ import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
+    private lateinit var mMap: GoogleMap
+    private lateinit var database: FirebaseDatabase
+    private lateinit var pinsRef: DatabaseReference
     private var map: GoogleMap? = null
     private lateinit var placesClient: PlacesClient
     private lateinit var searchView: SearchView
@@ -34,9 +43,48 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         Places.initialize(requireContext(), "AIzaSyBnDwch8Nndq-X-vA1lmFwZXokpR2lJRxw")
         placesClient = Places.createClient(requireContext())
-
+        database = FirebaseDatabase.getInstance()
+        pinsRef = database.getReference("pins")
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
+
+    private fun loadPinsFromFirebase() {
+        pinsRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // Clear existing markers
+                mMap.clear()
+
+                // Add markers for each pin
+                for (pinSnapshot in snapshot.children) {
+                    val pin = pinSnapshot.getValue(Pin::class.java)
+                    pin?.let {
+                        val position = LatLng(it.latitude, it.longitude)
+                        val marker = mMap.addMarker(
+                            MarkerOptions()
+                                .position(position)
+                                .title(it.title)
+                                .snippet(it.description)
+                        )
+                        // You can store the pin ID in the marker tag for later reference
+                        marker?.tag = pinSnapshot.key
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("MapsActivity", "Failed to load pins", error.toException())
+                Toast.makeText(
+                    requireContext(),  // This is the correct way to get context in a Fragment
+                    "Failed to load pins: ${error.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+
+
+        })
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -137,6 +185,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        loadPinsFromFirebase()
         map = googleMap
 
         // Enable the ability to add markers on map click
@@ -160,6 +210,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-
-
 }
+data class Pin(
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0,
+    val title: String = "",
+    val description: String = ""
+    // Add other fields that match your Firebase data structure
+)
